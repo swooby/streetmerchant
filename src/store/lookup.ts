@@ -181,6 +181,8 @@ async function lookup(browser: Browser, store: Store) {
       continue;
     }
 
+    logger.info(`Lookup "${link.brand}" "${link.series}" "${link.model}" @ "${link.url}"...`);
+
     const proxy = nextProxy(store);
 
     const useAdBlock = !config.browser.lowBandwidth && !store.disableAdBlocker;
