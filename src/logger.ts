@@ -58,18 +58,17 @@ export const Print = {
     color?: boolean
   ): string {
     if (color) {
-      return (
-        '✖ ' +
-        buildProductString(link, store, true) +
-        ' :: ' +
-        chalk.yellow(`STATUS CODE ERROR ${statusCode}`)
-      );
+      return `✖ ${buildProductString(
+        link,
+        store,
+        true
+      )} :: ${chalk.yellow(`STATUS CODE ERROR ${statusCode}`)} ${link.url}`;
     }
 
     return `✖ ${buildProductString(
       link,
       store
-    )} :: STATUS CODE ERROR ${statusCode}`;
+    )} :: STATUS CODE ERROR ${statusCode} ${link.url}`;
   },
   bannedSeller(link: Link, store: Store, color?: boolean): string {
     if (color) {
