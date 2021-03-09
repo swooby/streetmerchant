@@ -118,8 +118,8 @@ async function loopMain() {
   }
 }
 
-void loopMain();
-
 process.on('SIGINT', stopAndExit);
 process.on('SIGQUIT', stopAndExit);
 process.on('SIGTERM', stopAndExit);
+
+loopMain();
