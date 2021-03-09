@@ -59,6 +59,7 @@ async function main() {
   }
 
   await stop();
+
   browser = await launch({
     args,
     defaultViewport: {
@@ -71,12 +72,15 @@ async function main() {
   config.browser.userAgent = await browser.userAgent();
 
   for (const store of storeList.values()) {
-    logger.debug('store links', {meta: {links: store.links}});
-    if (store.setupAction !== undefined) {
-      store.setupAction(browser);
+    if (config.store.stores.find(it => it.name === store.name)) {
+      logger.debug(`${store.name} store links`, {meta: {links: store.links}});
+      if (store.setupAction !== undefined) {
+        store.setupAction(browser);
+      }
+      setTimeout(tryLookupAndLoop, getSleepTime(store), browser, store)  
+    } else {
+      logger.debug(`${store.name} ignored`);
     }
-
-    setTimeout(tryLookupAndLoop, getSleepTime(store), browser, store);
   }
 
   await startAPIServer();
