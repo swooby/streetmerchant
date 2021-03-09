@@ -379,9 +379,11 @@ async function handleResponse(
           );
         }
       } else {
+        logger.warn(`response=${await response?.text()}`);
         logger.warn(Print.badStatusCode(link, store, statusCode, true));
       }
     } else {
+      logger.warn(`response=${await response?.text()}`);
       logger.warn(Print.badStatusCode(link, store, statusCode, true));
     }
   }
