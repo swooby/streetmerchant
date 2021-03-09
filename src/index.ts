@@ -4,7 +4,7 @@ import {startAPIServer, stopAPIServer} from './web';
 import {Browser, launch} from 'puppeteer';
 import {getSleepTime} from './util';
 import {logger} from './logger';
-import {storeList} from './store/model';
+import {storeList, getStores} from './store/model';
 import {tryLookupAndLoop} from './store';
 
 let browser: Browser | undefined;
@@ -72,7 +72,7 @@ async function main() {
   config.browser.userAgent = await browser.userAgent();
 
   for (const store of storeList.values()) {
-    if (config.store.stores.find(it => it.name === store.name)) {
+    if (getStores().has(store.name)) {
       logger.debug(`${store.name} store links`, {meta: {links: store.links}});
       if (store.setupAction !== undefined) {
         store.setupAction(browser);
